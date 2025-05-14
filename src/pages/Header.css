@@ -1,0 +1,10 @@
+.logo{
+    width: 80px;
+    height: 80px;
+    filter: brightness(0) saturate(100%) invert(12%) sepia(100%) saturate(7460%) hue-rotate(358deg) brightness(94%) contrast(110%);
+}
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
