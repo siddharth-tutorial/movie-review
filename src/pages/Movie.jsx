@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -10,7 +11,8 @@ import {
   Pagination,
   Modal,
 } from "react-bootstrap";
-import "./Movie.css"; 
+import NetflixLoader from "./NetflixLoader"; 
+import "./Movie.css";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -168,14 +170,9 @@ function Movie() {
 
   return (
     <div className="movie-page">
-      {loading && (
-        <div className="netflix-loader">
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-        </div>
-      )}
+      {/* Full-page Loader */}
+      {loading && <NetflixLoader />}
+
       <Container>
         <h2 className="mb-4 fw-bold">
           {searchTerm ? `Search results for "${searchTerm}"` : "Popular Movies"}
@@ -183,7 +180,10 @@ function Movie() {
 
         {/* Search & Filters */}
         <Form className="mb-4" onSubmit={handleSearchSubmit}>
-          <Row className="align-items-center gx-2" style={{ maxWidth: "700px", margin: "auto" }}>
+          <Row
+            className="align-items-center gx-2"
+            style={{ maxWidth: "700px", margin: "auto" }}
+          >
             <Col xs={12} md={5} className="mb-2 mb-md-0">
               <Form.Control
                 type="text"
@@ -225,7 +225,7 @@ function Movie() {
               </Form.Select>
             </Col>
             <Col xs={12} md={1}>
-              <Button type="submit" style={{ width: "100%" }}>
+              <Button type="submit" style={{ width: "150%" }}>
                 Search
               </Button>
             </Col>
@@ -233,56 +233,66 @@ function Movie() {
         </Form>
 
         {/* Movies */}
-        {error ? (
-          <Alert variant="danger">Error: {error}</Alert>
-        ) : movies.length === 0 ? (
-          <Alert variant="warning">No movies found.</Alert>
-        ) : (
+        {!loading && ( // only show content when NOT loading
           <>
-            <Row>
-              {movies.map((movie) => (
-                <Col key={movie.id} xs={6} md={4} lg={3} className="mb-4">
-                  <Card
-                    bg="dark"
-                    text="white"
-                    className="h-100"
-                    onClick={() => openModal(movie)}
-                    style={{ cursor: "pointer", border: "none" }}
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={
-                        movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                          : "https://via.placeholder.com/500x750?text=No+Image"
-                      }
-                      alt={movie.title}
-                    />
-                    <Card.Body>
-                      <Card.Title className="text-truncate">{movie.title}</Card.Title>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-            {totalPages > 1 && renderPagination()}
+            {error ? (
+              <Alert variant="danger">Error: {error}</Alert>
+            ) : movies.length === 0 ? (
+              <Alert variant="warning">No movies found.</Alert>
+            ) : (
+              <>
+                <Row>
+                  {movies.map((movie) => (
+                    <Col key={movie.id} xs={6} md={4} lg={3} className="mb-4">
+                      <Card
+                        bg="dark"
+                        text="white"
+                        className="h-100"
+                        onClick={() => openModal(movie)}
+                        style={{ cursor: "pointer", border: "none" }}
+                      >
+                        <Card.Img
+                          variant="top"
+                          src={
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                              : "https://via.placeholder.com/500x750?text=No+Image"
+                          }
+                          alt={movie.title}
+                        />
+                        <Card.Body>
+                          <Card.Title className="text-truncate">
+                            {movie.title}
+                          </Card.Title>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+                {totalPages > 1 && renderPagination()}
+              </>
+            )}
           </>
         )}
 
         {/* Modal */}
-        <Modal show={showModal} onHide={closeModal} size="lg" centered contentClassName="bg-dark text-white">
+        <Modal
+          show={showModal}
+          onHide={closeModal}
+          size="lg"
+          centered
+          contentClassName="bg-dark text-white"
+        >
           <Modal.Header closeButton closeVariant="white">
             <Modal.Title>{selectedMovie?.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {modalLoading ? (
-              <div style={{ height: "300px" }} className="d-flex align-items-center justify-content-center">
-                <div className="netflix-loader">
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                </div>
+              <div
+                style={{ height: "300px" }}
+                className="d-flex align-items-center justify-content-center"
+              >
+                <NetflixLoader />
               </div>
             ) : trailerKey ? (
               <div className="ratio ratio-16x9">

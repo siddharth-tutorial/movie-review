@@ -1,16 +1,17 @@
-import React from 'react'
+import React from 'react';
+import './netflix.css';
 
 function NetflixLoader() {
   return (
-    <div>
-        <div className="netflix-loader">
-      <div className="bar"></div>
-      <div className="bar"></div>
-      <div className="bar"></div>
-      <div className="bar"></div>
+    <div className="netflix-loader-wrapper">
+      <div className="netflix-loader">
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+      </div>
     </div>
-    </div>
-  )
+  );
 }
 
-export default NetflixLoader
+export default NetflixLoader;
