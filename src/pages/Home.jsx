@@ -126,7 +126,7 @@ const MovieRow = ({ title, fetchUrl }) => {
 
 function Home() {
   return (
-    <div className="home-page">
+    <div className="home-page bg-dark text-white">
       <MovieRow
          title="Trending Now"
         fetchUrl={`https://api.themoviedb.org/3/trending/all/week?api_key=32e720b6329b645232ba0cb509207657`}
