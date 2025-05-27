@@ -233,7 +233,7 @@ function Tv() {
               </Form.Select>
             </Col>
             <Col xs={12} md={1}>
-              <Button type="submit" style={{ width: "100%" }}>
+              <Button type="submit" style={{ width: "150%" }}>
                 Search
               </Button>
             </Col>
